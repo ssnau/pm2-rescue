@@ -2,7 +2,9 @@ pm2-rescue
 -------
 
 
-For some reason, async javascript code would lost in limbo. Fortunately, a lot javascript programmer use `PM2` to manage their app and start multi instances. But it does not solve the problem, a app run into limbo doesnot means it is died and PM2 cannot restart it automatically. That's why i create pm2-rescue.
+For some reason, async javascript code would lost in limbo. Fortunately, a lot javascript programmer use `PM2` to manage their app and start multi instances.
+However, it does not solve the problem. A app run into limbo does not means it is died while PM2 cannot restart it automatically. 
+That's why I create pm2-rescue.
 
 Install
 ----
