@@ -15,6 +15,7 @@ class PM2Cooperation {
     this.pm2bin = cfg.pm2bin;
     this.restart = cfg.restart; // a custom restart function
     this.lock = false;
+    this._lastCheckHandler = null;
   }
   update() {
     var obj = {};
@@ -24,6 +25,8 @@ class PM2Cooperation {
       time_str: util.formatTime(new Date()),
     };
     util.mergeJSON(this.filename, obj);
+    if (this._lastCheckHandler) clearTimeout(this._lastCheckHandler);
+    this._lastCheckHandler = setTimeout(() => this.rescue(), this.timeout);
   }
   rescue() {
     if (this.lock) return; // never ever run rescue simultaneously

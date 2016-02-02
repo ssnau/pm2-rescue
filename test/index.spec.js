@@ -61,5 +61,15 @@ describe('should auto save brothers', function () {
     });
   });
 
+  it('should rescue if the app limboed', function (done) {
+    p1.timeout = 1000;
+    // the restart will finally be called
+    p1.restart = function () {
+      done();
+      return Promise.resolve({code: 1, out: ''});
+    };
+    p1.update();
+  });
+
 
 });
