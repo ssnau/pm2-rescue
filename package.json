@@ -1,6 +1,6 @@
 {
   "name": "pm2-rescue",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "rescue you died process by cooperated process",
   "main": "index.js",
   "scripts": {
