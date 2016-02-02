@@ -39,10 +39,13 @@ class PM2Cooperation {
       for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
         var info = json[key];  
-        var ts = info.ts;
-        if (now - ts < me.timeout) continue;
+        if (now - info.ts < me.timeout) continue;
+        if (info.last_rescue && now - info.last_rescue < me.timeout) continue;
         var res = yield (me.restart ? me.restart(key, info) : xspawn(`${me.pm2bin} restart ${info.pm_id}`));
-        if (String(res.code) !== '0') util.deleteKey(me.filename, key);
+        if (String(res.code) !== '0') {
+          util.deleteKey(me.filename, key);
+          info.last_rescue = Date.now();
+        }
         console.log(res.out);
       }
       me.lock = false;

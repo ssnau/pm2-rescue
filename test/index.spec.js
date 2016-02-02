@@ -71,5 +71,21 @@ describe('should auto save brothers', function () {
     p1.update();
   });
 
-
+  it('should not rescue twice within one timeout', function (done) {
+    p1.timeout = 500;
+    var count = 0;
+    // the restart will finally be called
+    p1.restart = function () {
+      count++;
+      return Promise.resolve({code: 1, out: ''});
+    };
+    var info = { ts: Date.now() - 3000 };
+    util.writeJSON(cfile, {'3': info });
+    p1.rescue();
+    setTimeout(() => p1.rescue());
+    setTimeout(function () {
+      assert.equal(count, 1);
+      done();
+    }, 1400);
+  });
 });
