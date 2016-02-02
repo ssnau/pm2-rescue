@@ -1,0 +1,22 @@
+{
+  "name": "pm2-rescue",
+  "version": "1.0.0",
+  "description": "rescue you died process by cooperated process",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "pm2",
+    "rescue"
+  ],
+  "author": "ssnau",
+  "license": "MIT",
+  "dependencies": {
+    "co": "^4.6.0",
+    "xspawn": "^1.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5"
+  }
+}
