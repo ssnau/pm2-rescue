@@ -15,7 +15,7 @@ npm install pm2-rescue
 Usage
 -----
 
-```
+```javascript
 var PMC = require('pm2-rescue');
 
 var pmc = new PMC({
