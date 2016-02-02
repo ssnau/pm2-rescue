@@ -14,6 +14,7 @@ class PM2Cooperation {
     this.timeout = cfg.timeout || TIMEOUT;
     this.pm2bin = cfg.pm2bin;
     this.restart = cfg.restart; // a custom restart function
+    this.lock = false;
   }
   update() {
     var obj = {};
@@ -25,10 +26,12 @@ class PM2Cooperation {
     util.mergeJSON(this.filename, obj);
   }
   rescue() {
+    if (this.lock) return; // never ever run rescue simultaneously
     var json = util.readJSON(this.filename);
     var now = Date.now();
     var keys = Object.keys(json);
     var me = this;
+    me.lock = true;
     return co(function*() {
       for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
@@ -39,7 +42,11 @@ class PM2Cooperation {
         if (String(res.code) !== '0') util.deleteKey(me.filename, key);
         console.log(res.out);
       }
-    }).catch(e => console.log(e.stack));
+      me.lock = false;
+    }).catch(e => {
+      console.log(e.stack);
+      me.lock = false;
+    })
   }
 }
 module.exports = PM2Cooperation;
